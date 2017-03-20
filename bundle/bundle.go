@@ -11,12 +11,16 @@ import (
     "os/exec"
     "os/user"
     "path/filepath"
+    "runtime"
     "strconv"
     "strings"
     "syscall"
 )
 
 func main() {
+    if runtime.GOOS != "linux" {
+        log.Fatal("Linux is the only currently supported operating system")
+    }
     target_path := strings.TrimRight(os.Args[1], "/")
     tag_files(target_path)
     make_squashfs(target_path)
